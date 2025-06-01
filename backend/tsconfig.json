@@ -1,0 +1,27 @@
+{
+  "ts-node": {
+    "files": true,
+    "transpileOnly": true
+  },
+  "compilerOptions": {
+    "outDir": "./dist",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "isolatedModules": false,
+    "noFallthroughCasesInSwitch": true,
+    "lib": ["ES2021"],
+    "target": "ES2021"
+  },
+  "include": ["src"]
+}
