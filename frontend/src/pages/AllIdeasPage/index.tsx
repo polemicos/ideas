@@ -10,7 +10,7 @@ export const AllIdeasPages = () => {
   if (!data) return <div>No data</div>;
   return (
     <div>
-      <h1>IdeaNick</h1>
+      <h1>All Ideas</h1>
       <div className="ideas">
         {data.ideas.map((idea) => (
           <div key={idea.id}>
