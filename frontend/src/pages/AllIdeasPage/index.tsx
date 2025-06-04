@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Segment } from '../../components/Segment';
 import { getViewIdeaRoute } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 import css from './index.module.scss';
@@ -10,18 +11,19 @@ export const AllIdeasPages = () => {
   if (isError) return <div>{error.message}</div>;
   if (!data) return <div>No data</div>;
   return (
-    <div>
-      <h1 className={css.title}>All Ideas</h1>
+    <Segment title="All Ideas">
       <div className={css.ideas}>
         {data.ideas.map((idea) => (
           <div className={css.idea} key={idea.id}>
-            <h2 className={css.ideaTitle}>
-              <Link className={css.ideaLink} to={getViewIdeaRoute({ title: idea.title })}>{idea.title}</Link>
-            </h2>
-            <p className={css.ideaDescription}>{idea.description}</p>
+            <Segment size={2} 
+              title={
+                <Link className={css.ideaLink} to={getViewIdeaRoute({ title: idea.title })}>{idea.title}</Link>
+              }
+              description={idea.description}
+            />
           </div>
         ))}
       </div>
-    </div>
+    </Segment>
   );
 };

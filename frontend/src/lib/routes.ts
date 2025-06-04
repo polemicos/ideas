@@ -15,3 +15,6 @@ export const getAllIdeasRoute = () => '/';
 export const viewIdeaRouteParams = getRouteParams({ title: true });
 export type ViewIdeaRouteParams = typeof viewIdeaRouteParams;
 export const getViewIdeaRoute = ({ title }: ViewIdeaRouteParams) => `/ideas/${title}`;
+
+// NewIdeaPage
+export const getNewIdeaRoute = () => '/ideas/new';
