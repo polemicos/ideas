@@ -1,11 +1,12 @@
-@import '../../styles/_vars.scss';
-@import '../../styles/_mixins.scss';
+@import '../../styles/vars';
+@import '../../styles/mixins';
 
 .ideas {
   .idea {
     padding: 20px;
     border: 1px solid $black;
     border-radius: 10px;
+
     & + .idea {
       margin-top: 20px;
     }
