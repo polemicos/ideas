@@ -1,5 +1,5 @@
 @use './vars' as *;
-@use 'include-media' as includeMedia;
+@use 'include-media/dist/include-media' as includeMedia;
 
 @mixin link($color: $blue, $hoverColor: $red) {
   color: $color;
