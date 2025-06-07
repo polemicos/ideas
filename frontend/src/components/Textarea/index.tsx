@@ -12,6 +12,7 @@ export const Textarea = ({
 }) => {
   const value = formik.values[name];
   const error = formik.errors[name] as string | undefined;
+  const touched = formik.touched[name];
 
   return (
     <div style={{ marginBottom: 10 }}>
@@ -21,11 +22,14 @@ export const Textarea = ({
         onChange={(e) => {
           void formik.setFieldValue(name, e.target.value);
         }}
+        onBlur={()=>{
+          void formik.setFieldTouched(name, true)
+        }}
         value={value}
         name={name}
         id={name}
       />
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {!!touched && !!error && <div style={{ color: 'red' }}>{error}</div>}
     </div>
   );
 };
