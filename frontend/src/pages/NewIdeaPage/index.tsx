@@ -13,6 +13,24 @@ export const NewIdeaPage = () => {
     onSubmit: (values) => {
       console.info('Submitted', values)
     },
+    validate: (values) => {
+      const errors: Partial<typeof values> = {}
+      
+      // Title
+      if (!values.title) errors.title = 'Required'
+      else if (values.title.length < 5) errors.title = 'Too short'
+      else if (!values.title.match(/^[a-zA-Z0-9 ]+$/)) errors.title = 'Only letters, numbers and spaces allowed'
+
+      // Description
+      if (!values.description) errors.description = 'Required'
+      else if (values.description.length < 10) errors.description = 'Too short'
+
+      // Text
+      if (!values.text) errors.text = 'Required'
+      else if (values.text.length < 100) errors.text = 'Text of an idea must be at least 100 characters long'
+
+      return errors
+    }
   })
 
   return (

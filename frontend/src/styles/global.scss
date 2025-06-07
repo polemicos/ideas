@@ -1,5 +1,6 @@
-@import '../../node_modules/reset-css/sass/reset';
-@import './vars';
+@use './vars' as *;
+@use 'reset-css/sass/reset';
+@forward './mixins';
 
 html,
 body,

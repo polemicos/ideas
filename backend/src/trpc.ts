@@ -9,12 +9,6 @@ const ideas = _.times(100, (i) => ({
   text: _.times(50, (j) => `<p>Text paragraph ${j} of idea ${i}...</p>`).join(''),
 }));
 
-// const ideas = [
-//   { id: 1, title: 'Idea 1', description: 'Description' },
-//   { id: 2, title: 'Idea 2', description: 'Description' },
-//   { id: 3, title: 'Idea 3', description: 'Description' },
-// ];
-
 const trpc = initTRPC.create();
 export const trpcRouter = trpc.router({
   getIdeas: trpc.procedure.query(() => {

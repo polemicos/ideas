@@ -1,5 +1,5 @@
-@import './vars';
-@import '../../node_modules/include-media/dist/include-media';
+@use './vars' as *;
+@use 'include-media' as includeMedia;
 
 @mixin link($color: $blue, $hoverColor: $red) {
   color: $color;
@@ -9,6 +9,12 @@
   &:active {
     color: $hoverColor;
     transition: none;
+  }
+}
+
+@mixin media($media...) {
+  @include includeMedia.media($media...) {
+    @content;
   }
 }
 
