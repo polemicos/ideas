@@ -1,7 +1,7 @@
+import { zCreateideaTrpcInput } from '@devpont/backend/src/router/createIdea/input';
 import { useFormik } from 'formik';
 /* eslint-disable-next-line import/no-unresolved */
 import { withZodSchema } from 'formik-validator-zod';
-import { z } from 'zod';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
 import { Textarea } from '../../components/Textarea';
@@ -20,16 +20,7 @@ export const NewIdeaPage = () => {
       console.info('Submitted', values);
     },
 
-    validate: withZodSchema(
-      z.object({
-        title: z
-          .string()
-          .min(5, 'Title must be at least 5 characters long')
-          .regex(/^[a-zA-Z0-9 ]+$/, 'Only letters, numbers and spaces allowed'),
-        description: z.string().min(10, 'Description must be at least 10 characters long'),
-        text: z.string().min(100, 'Text of an idea must be at least 100 characters long'),
-      })
-    ),
+    validate: withZodSchema(zCreateideaTrpcInput),
   });
   return (
     <Segment title="New Idea">
