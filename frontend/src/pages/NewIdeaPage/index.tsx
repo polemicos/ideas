@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 /* eslint-disable-next-line import/no-unresolved */
 import { withZodSchema } from 'formik-validator-zod';
 import { useState } from 'react';
+import { Alert } from '../../components/Alert';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
 import { Textarea } from '../../components/Textarea';
@@ -48,16 +49,15 @@ export const NewIdeaPage = () => {
           formik.handleSubmit();
         }}
       >
+        {/* Inputs */}
         <Input name={'title'} label={'Title for your idea'} formik={formik} />
-
         <Input name={'description'} label={'Describe your idea'} formik={formik} maxWidth={500} />
-
         <Textarea name={'text'} label={'Write your idea'} formik={formik} />
-        {!formik.isValid && !!formik.submitCount && (
-          <div style={{ color: 'red' }}>Form is not valid</div>
-        )}
-        {successMessageVisible && <div style={{ color: 'green' }}>Idea created</div>}
-        {!!errorMessage && <div style={{ color: 'red' }}>Error creating idea: {errorMessage}</div>}
+        {/* Alerts */}
+        {!formik.isValid && !!formik.submitCount && <Alert color="red">Form is not valid</Alert>}
+        {successMessageVisible && <Alert color="green">Idea created</Alert>}
+        {!!errorMessage && <Alert color="red">Error creating idea: {errorMessage}</Alert>}
+        {/* Submit */}
         <button type="submit" disabled={formik.isSubmitting}>
           {formik.isSubmitting ? 'Submitting...' : 'Create Idea'}
         </button>

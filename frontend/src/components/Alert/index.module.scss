@@ -1,0 +1,16 @@
+@use '../../styles/vars' as *;
+
+.alert {
+  padding: 10px;
+  border-radius: $borderRadiusSmall;
+
+  &.red {
+    color: $lightRed;
+    background-color: $red;
+  }
+
+  &.green {
+    color: $lightGreen;
+    background-color: $green;
+  }
+}
