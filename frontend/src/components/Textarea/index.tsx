@@ -10,6 +10,7 @@ export const Textarea = ({
   label: string;
   formik: FormikProps<any>;
 }) => {
+  const isSubmitting = formik.isSubmitting;
   const value = formik.values[name];
   const error = formik.errors[name] as string | undefined;
   const touched = formik.touched[name];
@@ -19,11 +20,12 @@ export const Textarea = ({
       <label htmlFor={name}>{label}</label>
       <br />
       <textarea
+        disabled={isSubmitting}
         onChange={(e) => {
           void formik.setFieldValue(name, e.target.value);
         }}
-        onBlur={()=>{
-          void formik.setFieldTouched(name, true)
+        onBlur={() => {
+          void formik.setFieldTouched(name, true);
         }}
         value={value}
         name={name}
