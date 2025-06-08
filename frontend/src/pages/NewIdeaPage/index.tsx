@@ -50,7 +50,7 @@ export const NewIdeaPage = () => {
       >
         <Input name={'title'} label={'Title for your idea'} formik={formik} />
 
-        <Input name={'description'} label={'Describe your idea'} formik={formik} />
+        <Input name={'description'} label={'Describe your idea'} formik={formik} maxWidth={500} />
 
         <Textarea name={'text'} label={'Write your idea'} formik={formik} />
         {!formik.isValid && !!formik.submitCount && (
