@@ -5,12 +5,12 @@
   border-radius: $borderRadiusSmall;
 
   &.red {
-    color: $lightRed;
-    background-color: $red;
+    color: $red;
+    background-color: $lightRed;
   }
 
   &.green {
-    color: $lightGreen;
-    background-color: $green;
+    color: $green;
+    background-color: $lightGreen;
   }
 }

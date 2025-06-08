@@ -4,6 +4,8 @@ import { useFormik } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
 import { useState } from 'react';
 import { Alert } from '../../components/Alert';
+import { Button } from '../../components/Button';
+import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
 import { Textarea } from '../../components/Textarea';
@@ -49,18 +51,20 @@ export const NewIdeaPage = () => {
           formik.handleSubmit();
         }}
       >
-        {/* Inputs */}
-        <Input name={'title'} label={'Title for your idea'} formik={formik} />
-        <Input name={'description'} label={'Describe your idea'} formik={formik} maxWidth={500} />
-        <Textarea name={'text'} label={'Write your idea'} formik={formik} />
-        {/* Alerts */}
-        {!formik.isValid && !!formik.submitCount && <Alert color="red">Form is not valid</Alert>}
-        {successMessageVisible && <Alert color="green">Idea created</Alert>}
-        {!!errorMessage && <Alert color="red">Error creating idea: {errorMessage}</Alert>}
-        {/* Submit */}
-        <button type="submit" disabled={formik.isSubmitting}>
-          {formik.isSubmitting ? 'Submitting...' : 'Create Idea'}
-        </button>
+        <FormItems>
+          {/* Inputs */}
+          <Input name={'title'} label={'Title for your idea'} formik={formik} />
+          <Input name={'description'} label={'Describe your idea'} formik={formik} maxWidth={500} />
+          <Textarea name={'text'} label={'Write your idea'} formik={formik} />
+
+          {/* Alerts */}
+          {!formik.isValid && !!formik.submitCount && <Alert color="red">Form is not valid</Alert>}
+          {successMessageVisible && <Alert color="green">Idea created</Alert>}
+          {!!errorMessage && <Alert color="red">Error creating idea: {errorMessage}</Alert>}
+
+          {/* Submit */}
+          <Button loading={formik.isSubmitting}>Create Idea</Button>
+        </FormItems>
       </form>
     </Segment>
   );
