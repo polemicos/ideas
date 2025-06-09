@@ -1,3 +1,4 @@
+import { format } from 'date-fns/format';
 import { useParams } from 'react-router-dom';
 import { Segment } from '../../components/Segment';
 import { ViewIdeaRouteParams } from '../../lib/routes';
@@ -17,6 +18,7 @@ export const ViewIdeaPage = () => {
   if (!data.idea) return <div>Idea not found</div>;
   return (
     <Segment title={data.idea.title} description={data.idea.description}>
+      <div className={css.createdAt}>Created at: {format(data.idea.createdAt, 'dd-MM-yyyy')}</div>
       <div>
         <div className={css.text} dangerouslySetInnerHTML={{ __html: data.idea.text }} />
       </div>

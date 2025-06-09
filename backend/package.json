@@ -13,7 +13,8 @@
     "pgc": "prisma generate",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext .ts . --fix",
     "prettify": "prettier --log-level warn --cache --write '{src/**/*,*}.{js,ts,tsx,json,css,scss,yml}' '!**/{node_modules, dist}/**/*'",
-    "prepare": "pnpm pgc"
+    "prepare": "pnpm pgc",
+    "resetdb": "prisma migrate reset"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +31,7 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "lodash": "^4.17.21",
+    "superjson": "^2.2.2",
     "zod": "^3.25.49"
   },
   "devDependencies": {
