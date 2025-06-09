@@ -8,11 +8,13 @@ export const Input = ({
   label,
   formik,
   maxWidth,
+  type = 'text',
 }: {
   name: string;
   label: string;
   formik: FormikProps<any>;
   maxWidth?: number;
+  type?: 'text' | 'password';
 }) => {
   const value = formik.values[name];
   const error = formik.errors[name] as string | undefined;
@@ -29,7 +31,7 @@ export const Input = ({
         className={cn({ [css.input]: true, [css.invalid]: invalid })}
         style={{ maxWidth }}
         disabled={isSubmitting}
-        type="text"
+        type={type}
         onChange={(e) => {
           void formik.setFieldValue(name, e.target.value);
         }}

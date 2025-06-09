@@ -18,3 +18,6 @@ export const getViewIdeaRoute = ({ title }: ViewIdeaRouteParams) => `/ideas/${ti
 
 // NewIdeaPage
 export const getNewIdeaRoute = () => '/ideas/new';
+
+// SignUp
+export const getSignUpRoute = () => '/sign-up';
