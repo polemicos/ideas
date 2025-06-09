@@ -6,7 +6,7 @@ module.exports = {
     sourceType: 'module',
     ecmaVersion: 'latest',
   },
-  plugins: ['@typescript-eslint', 'import', 'unused-imports'],
+  plugins: ['@typescript-eslint', 'import', 'unused-imports', 'node'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -29,6 +29,7 @@ module.exports = {
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
+    'node/no-process-env': 'warn'
   },
   ignorePatterns: ['dist', 'node_modules'],
 };
