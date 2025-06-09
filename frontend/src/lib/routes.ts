@@ -24,3 +24,6 @@ export const getSignUpRoute = () => '/sign-up';
 
 // SignIn
 export const getSignInRoute = () => '/sign-in';
+
+// SignOut
+export const getSignOutRoute = () => '/sign-out';

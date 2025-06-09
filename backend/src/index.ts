@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import { AppContext, createAppContext } from './lib/ctx';
+import { applyPassportToExpressApp } from './lib/passport';
 import { applyTrpcToExpressApp } from './lib/trpc';
 import { trpcRouter } from './router/router';
 
@@ -12,6 +13,7 @@ void (async () => {
 
     app.use(cors());
 
+    applyPassportToExpressApp(app, ctx);
     applyTrpcToExpressApp(app, ctx, trpcRouter);
 
     app.listen(3000, () => {
