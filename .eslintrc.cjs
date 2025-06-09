@@ -29,7 +29,11 @@ module.exports = {
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
-    'node/no-process-env': 'warn'
+    'node/no-process-env': 'warn',
+    'no-restricted-syntax': ['error',{
+      'selector' : 'MemberExpression[object.type="MetaProperty"][object.meta.name="import"][object.property.name="meta"][property.name="env"]',
+      'message' : 'Use `import { env } from "../lib/env` instead',
+    }]
   },
   ignorePatterns: ['dist', 'node_modules'],
 };

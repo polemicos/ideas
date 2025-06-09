@@ -1,19 +1,16 @@
-import path from 'path';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  css: {
-    preprocessorOptions: {
-      scss: {
-        includePaths: [
-          path.resolve(__dirname, 'src/styles'),
-          path.resolve(__dirname, 'node_modules'),
-        ],
-        api: 'legacy',
-      },
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+
+  return {
+    plugins: [react()],
+    server: {
+      port: +env.PORT,
     },
-  },
+    preview: {
+      port: +env.PORT,
+    },
+  };
 });

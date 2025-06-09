@@ -1,4 +1,10 @@
 {
+  "eslint.nodePath": "node_modules",
+  "eslint.enable": true,
+  "eslint.workingDirectories": [ "./frontend", "./backend" ],
   "eslint.validate": ["typescript", "typescriptreact"],
-  
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  }
 }
