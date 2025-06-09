@@ -21,3 +21,6 @@ export const getNewIdeaRoute = () => '/ideas/new';
 
 // SignUp
 export const getSignUpRoute = () => '/sign-up';
+
+// SignIn
+export const getSignInRoute = () => '/sign-in';
