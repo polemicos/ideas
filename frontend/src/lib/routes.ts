@@ -8,13 +8,18 @@ const getRouteParams = <T extends Record<string, boolean>>(object: T) => {
   ) as Record<keyof T, string>;
 };
 
-// Routes
+//                Routes
 export const getAllIdeasRoute = () => '/';
 
 // ViewIdeaPage
 export const viewIdeaRouteParams = getRouteParams({ title: true });
 export type ViewIdeaRouteParams = typeof viewIdeaRouteParams;
 export const getViewIdeaRoute = ({ title }: ViewIdeaRouteParams) => `/ideas/${title}`;
+
+// EditIdeaPage
+export const editIdeaRouteParams = getRouteParams({ title: true });
+export type EditIdeaRouteParams = typeof editIdeaRouteParams;
+export const getEditIdeaRoute = ({ title }: EditIdeaRouteParams) => `/ideas/${title}/edit`;
 
 // NewIdeaPage
 export const getNewIdeaRoute = () => '/ideas/new';

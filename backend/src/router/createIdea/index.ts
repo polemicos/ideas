@@ -1,8 +1,8 @@
 import { trpc } from '../../lib/trpc';
-import { zCreateideaTrpcInput } from './input';
+import { zCreateideaTrpcInput as zCreateIdeaTrpcInput } from './input';
 
 export const createIdeaTrpcRoute = trpc.procedure
-  .input(zCreateideaTrpcInput)
+  .input(zCreateIdeaTrpcInput)
   .mutation(async ({ ctx, input }) => {
     if (!ctx.me) throw new Error('Unauthorized');
     const exIdea = await ctx.prisma.idea.findUnique({

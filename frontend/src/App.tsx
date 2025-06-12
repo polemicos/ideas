@@ -3,6 +3,7 @@ import { Layout } from './components/Layout';
 import * as r from './lib/routes';
 import { TrpcProvider } from './lib/trpc';
 import { AllIdeasPages } from './pages/AllIdeasPage';
+import { EditIdeaPage } from './pages/EditIdeaPage';
 import { NewIdeaPage } from './pages/NewIdeaPage';
 import { SignInPage } from './pages/SignInPage';
 import { SignOutPage } from './pages/SignOutPage';
@@ -19,6 +20,7 @@ export const App = () => {
           <Route element={<Layout />}>
             <Route path={r.getAllIdeasRoute()} element={<AllIdeasPages />} />
             <Route path={r.getNewIdeaRoute()} element={<NewIdeaPage />} />
+            <Route path={r.getEditIdeaRoute(r.editIdeaRouteParams)} element={<EditIdeaPage />} />
             <Route path={r.getViewIdeaRoute(r.viewIdeaRouteParams)} element={<ViewIdeaPage />} />
             <Route path={r.getSignUpRoute()} element={<SignUpPage />} />
             <Route path={r.getSignInRoute()} element={<SignInPage />} />
