@@ -4,6 +4,7 @@ import { zCreateideaTrpcInput } from './input';
 export const createIdeaTrpcRoute = trpc.procedure
   .input(zCreateideaTrpcInput)
   .mutation(async ({ ctx, input }) => {
+    if (!ctx.me) throw new Error('Unauthorized');
     const exIdea = await ctx.prisma.idea.findUnique({
       where: {
         title: input.title,
@@ -14,7 +15,7 @@ export const createIdeaTrpcRoute = trpc.procedure
     await ctx.prisma.idea.create({
       data: {
         // Change this when authorization will be implemented
-        userId: '1',
+        userId: ctx.me.id,
         title: input.title,
         description: input.description,
         text: input.text,

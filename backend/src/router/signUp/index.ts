@@ -11,7 +11,7 @@ export const signUpTrpcRoute = trpc.procedure
         name: input.name,
       },
     });
-    if (exUser) throw new Error('Idea with such title already exists');
+    if (exUser) throw new Error('User with such name already exists');
 
     const user = await ctx.prisma.user.create({
       data: {

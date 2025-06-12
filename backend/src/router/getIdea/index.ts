@@ -12,6 +12,14 @@ export const getIdeaTrpcRoute = trpc.procedure
       where: {
         title: input.title,
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
     });
     return { idea };
   });
