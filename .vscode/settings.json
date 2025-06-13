@@ -1,10 +1,18 @@
 {
-  "eslint.nodePath": "node_modules",
-  "eslint.enable": true,
-  "eslint.workingDirectories": [ "./frontend", "./backend" ],
+  "eslint.workingDirectories": [
+    {"mode": "auto"},
+    {
+      "directory": "./packages/frontend",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./packages/backend",
+      "changeProcessCWD": true
+    }
+  ],
   "eslint.validate": ["typescript", "typescriptreact"],
-  "editor.formatOnSave": true,
+  "eslint.trace.server": "verbose",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always"
-  }
+  },
 }

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-floating-promises */
-import type { TrpcRouterOutput } from '@devpont/backend/src/router/router';
 import { zUpdateIdeaTrpcInput } from '@devpont/backend/src/router/updateIdea/input';
 import pick from 'lodash/pick';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -9,16 +7,26 @@ import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
 import { Textarea } from '../../components/Textarea';
-import { useMe } from '../../lib/ctx';
 import { useForm } from '../../lib/form';
+import { withPageWrapper } from '../../lib/pageWrapper';
 import { type EditIdeaRouteParams, getViewIdeaRoute } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 
-const EditIdeaComponent = ({
-  idea,
-}: {
-  idea: NonNullable<TrpcRouterOutput['getIdea']['idea']>;
-}) => {
+export const EditIdeaPage = withPageWrapper({
+  authorizedOnly: true,
+  checkExists: ({ queryResult }) => !!queryResult.data.idea,
+  checkExistsMessage: 'Idea not found',
+  checkAccess: ({ queryResult, ctx }) => !!ctx.me && ctx.me.id === queryResult.data.idea?.userId,
+  checkAccessMessage: 'You are not the author of this idea',
+  useQuery: () => {
+    const { title } = useParams() as EditIdeaRouteParams;
+    return trpc.getIdea.useQuery({ title });
+  },
+  setProps: ({ queryResult }) => ({
+    /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
+    idea: queryResult.data.idea!,
+  }),
+})(({ idea }) => {
   const navigate = useNavigate();
   const updateIdea = trpc.updateIdea.useMutation();
   const { formik, alertProps, buttonProps } = useForm({
@@ -26,7 +34,7 @@ const EditIdeaComponent = ({
     validationSchema: zUpdateIdeaTrpcInput.omit({ ideaId: true }),
     onSubmit: async (values) => {
       await updateIdea.mutateAsync({ ideaId: idea.id, ...values });
-      navigate(getViewIdeaRoute({ title: values.title }));
+      void navigate(getViewIdeaRoute({ title: values.title }));
     },
     resetOnSuccess: false,
     showValidationAlert: true,
@@ -45,37 +53,4 @@ const EditIdeaComponent = ({
       </form>
     </Segment>
   );
-};
-
-export const EditIdeaPage = () => {
-  const { title } = useParams() as EditIdeaRouteParams;
-
-  const getIdeaResult = trpc.getIdea.useQuery({
-    title,
-  });
-  const me = useMe();
-
-  if (getIdeaResult.isLoading || getIdeaResult.isFetching) {
-    return <span>Loading...</span>;
-  }
-
-  if (getIdeaResult.isError) {
-    return <span>Error: {getIdeaResult.error.message}</span>;
-  }
-
-  if (!getIdeaResult.data?.idea) {
-    return <span>Idea not found</span>;
-  }
-
-  const idea = getIdeaResult.data?.idea;
-
-  if (!me) {
-    return <span>Only for authorized</span>;
-  }
-
-  if (me.id !== idea.userId) {
-    return <span>An idea can only be edited by the author</span>;
-  }
-
-  return <EditIdeaComponent idea={idea} />;
-};
+});

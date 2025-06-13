@@ -7,10 +7,13 @@ import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
 import { Textarea } from '../../components/Textarea';
 import { useForm } from '../../lib/form';
+import { withPageWrapper } from '../../lib/pageWrapper';
 import { getViewIdeaRoute } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 
-export const NewIdeaPage = () => {
+export const NewIdeaPage = withPageWrapper({
+  authorizedOnly: true,
+})(() => {
   const navigate = useNavigate();
   const createIdea = trpc.createIdea.useMutation();
   const { formik, alertProps, buttonProps } = useForm({
@@ -47,4 +50,4 @@ export const NewIdeaPage = () => {
       </form>
     </Segment>
   );
-};
+});
