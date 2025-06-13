@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-floating-promises */
 import type { TrpcRouterOutput } from '@devpont/backend/src/router/router';
 import { zUpdateIdeaTrpcInput } from '@devpont/backend/src/router/updateIdea/input';
-import { useFormik } from 'formik';
-/* eslint-disable-next-line import/no-unresolved */
-import { withZodSchema } from 'formik-validator-zod';
 import pick from 'lodash/pick';
-import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Alert } from '../../components/Alert';
 import { Button } from '../../components/Button';
@@ -13,6 +9,7 @@ import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
 import { Textarea } from '../../components/Textarea';
+import { useForm } from '../../lib/form';
 import { type EditIdeaRouteParams, getViewIdeaRoute } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 
@@ -22,23 +19,16 @@ const EditIdeaComponent = ({
   idea: NonNullable<TrpcRouterOutput['getIdea']['idea']>;
 }) => {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const updateIdea = trpc.updateIdea.useMutation();
-  const formik = useFormik({
+  const { formik, alertProps, buttonProps } = useForm({
     initialValues: pick(idea, ['title', 'description', 'text']),
-    validate: withZodSchema(zUpdateIdeaTrpcInput.omit({ ideaId: true })),
+    validationSchema: zUpdateIdeaTrpcInput.omit({ ideaId: true }),
     onSubmit: async (values) => {
-      await updateIdea
-        .mutateAsync({ ideaId: idea.id, ...values })
-        .then(() => {
-          setErrorMessage(null);
-          navigate(getViewIdeaRoute({ title: values.title }));
-        })
-        .catch((e) => {
-          console.error(e);
-          setErrorMessage(String(e.message));
-        });
+      await updateIdea.mutateAsync({ ideaId: idea.id, ...values });
+      navigate(getViewIdeaRoute({ title: values.title }));
     },
+    resetOnSuccess: false,
+    showValidationAlert: true,
   });
 
   return (
@@ -48,11 +38,8 @@ const EditIdeaComponent = ({
           <Input label="Title" name="title" formik={formik} />
           <Input label="Description" name="description" maxWidth={500} formik={formik} />
           <Textarea label="Text" name="text" formik={formik} />
-          {!formik.isValid && !!formik.submitCount && (
-            <Alert color="red">Some fields are invalid</Alert>
-          )}
-          {errorMessage && <Alert color="red">{errorMessage}</Alert>}
-          <Button loading={formik.isSubmitting}>Update Idea</Button>
+          <Alert {...alertProps} />
+          <Button {...buttonProps}>Update Idea</Button>
         </FormItems>
       </form>
     </Segment>
