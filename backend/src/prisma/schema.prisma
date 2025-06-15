@@ -21,6 +21,7 @@ model Idea {
 model User {
   id        String   @id @default(uuid())
   name      String   @unique
+  fullName  String   @default("")
   password  String
   ideas     Idea[]
   createdAt DateTime @default(now())

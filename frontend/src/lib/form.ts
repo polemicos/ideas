@@ -41,7 +41,7 @@ export const useForm = <TZodSchema extends z.ZodTypeAny>({
         setSuccessMessageVisible(true);
         setTimeout(() => {
           setSuccessMessageVisible(false);
-        });
+        }, 3000);
       } catch (error: any) {
         console.error(error);
         setErrorMessageVisible(error);

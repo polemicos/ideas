@@ -35,5 +35,8 @@ export const getSignInRoute = () => '/sign-in';
 // SignOut
 export const getSignOutRoute = () => '/sign-out';
 
+// EditUserPage
+export const getEditUserRoute = () => '/edit-user';
+
 // Not Found
 export const getNotFoundRoute = () => '*';
