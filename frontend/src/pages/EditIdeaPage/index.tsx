@@ -14,18 +14,15 @@ import { trpc } from '../../lib/trpc';
 
 export const EditIdeaPage = withPageWrapper({
   authorizedOnly: true,
-  checkExists: ({ queryResult }) => !!queryResult.data.idea,
-  checkExistsMessage: 'Idea not found',
-  checkAccess: ({ queryResult, ctx }) => !!ctx.me && ctx.me.id === queryResult.data.idea?.userId,
-  checkAccessMessage: 'You are not the author of this idea',
   useQuery: () => {
     const { title } = useParams() as EditIdeaRouteParams;
     return trpc.getIdea.useQuery({ title });
   },
-  setProps: ({ queryResult }) => ({
-    /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
-    idea: queryResult.data.idea!,
-  }),
+  setProps: ({ queryResult, ctx, checkAccess, checkExists }) => {
+    const idea = checkExists(queryResult.data.idea, 'Idea not found');
+    checkAccess(ctx.me?.id === idea.userId, 'You are not the author of this idea');
+    return { idea };
+  },
 })(({ idea }) => {
   const navigate = useNavigate();
   const updateIdea = trpc.updateIdea.useMutation();

@@ -9,6 +9,8 @@ const getRouteParams = <T extends Record<string, boolean>>(object: T) => {
 };
 
 //                Routes
+
+// AllIdeasPage
 export const getAllIdeasRoute = () => '/';
 
 // ViewIdeaPage
@@ -32,3 +34,6 @@ export const getSignInRoute = () => '/sign-in';
 
 // SignOut
 export const getSignOutRoute = () => '/sign-out';
+
+// Not Found
+export const getNotFoundRoute = () => '*';

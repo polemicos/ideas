@@ -6,6 +6,7 @@ import { TrpcProvider } from './lib/trpc';
 import { AllIdeasPages } from './pages/AllIdeasPage';
 import { EditIdeaPage } from './pages/EditIdeaPage';
 import { NewIdeaPage } from './pages/NewIdeaPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { SignInPage } from './pages/SignInPage';
 import { SignOutPage } from './pages/SignOutPage';
 import { SignUpPage } from './pages/SignUpPage';
@@ -26,6 +27,7 @@ export const App = () => {
               <Route path={r.getViewIdeaRoute(r.viewIdeaRouteParams)} element={<ViewIdeaPage />} />
               <Route path={r.getSignUpRoute()} element={<SignUpPage />} />
               <Route path={r.getSignInRoute()} element={<SignInPage />} />
+              <Route path={r.getNotFoundRoute()} element={<NotFoundPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

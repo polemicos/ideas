@@ -12,13 +12,10 @@ export const ViewIdeaPage = withPageWrapper({
     const { title } = useParams() as ViewIdeaRouteParams;
     return trpc.getIdea.useQuery({ title });
   },
-  checkExists: ({ queryResult }) => !!queryResult.data.idea,
-  checkExistsMessage: 'Idea not found',
-  setProps: ({ queryResult, ctx }) => ({
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    idea: queryResult.data.idea!,
-    me: ctx.me,
-  }),
+  setProps: ({ queryResult, ctx, checkExists }) => {
+    const idea = checkExists(queryResult.data.idea, 'Idea not found');
+    return { idea, me: ctx.me };
+  },
 })(({ idea, me }) => {
   return (
     <Segment title={idea.title} description={idea.description}>
