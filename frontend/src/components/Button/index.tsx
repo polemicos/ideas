@@ -5,14 +5,17 @@ import css from './index.module.scss';
 export type ButtonProps = {
   children: React.ReactNode;
   loading?: boolean;
+  type?: 'submit' | 'button';
+  onClick?: () => void;
 };
-export const Button = ({ children, loading }: ButtonProps) => (
+export const Button = ({ children, loading, type = 'submit', onClick }: ButtonProps) => (
   <button
     className={cn({ [css.button]: true, [css.disabled]: loading })}
-    type="submit"
+    type={type}
     disabled={loading}
+    onClick={onClick}
   >
-    {loading ? 'Submitting...' : children}
+    {loading ? 'Processing...' : children}
   </button>
 );
 
