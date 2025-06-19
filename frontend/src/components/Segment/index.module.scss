@@ -2,6 +2,8 @@
 @use '../../styles/mixins' as mixins;
 
 .segment {
+  margin-bottom: 25px;
+
   h1.title {
     @include mixins.h1;
   }
