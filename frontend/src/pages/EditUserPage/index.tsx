@@ -11,8 +11,8 @@ import { trpc } from '../../lib/trpc';
 
 export const EditUserPage = withPageWrapper({
   authorizedOnly: true,
-  setProps: ({ ctx }) => ({
-    me: ctx.me!,
+  setProps: ({ getAuthorizedMe }) => ({
+    me: getAuthorizedMe(),
   }),
 })(({ me }) => {
   const trpcUtils = trpc.useUtils();

@@ -1,7 +1,6 @@
 import { type UseTRPCQueryResult, type UseTRPCQuerySuccessResult } from '@trpc/react-query/shared';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ErrorPageComponent } from '../components/ErrorPageComponent';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { useAppContext, type AppContext } from './ctx';
 import { getAllIdeasRoute } from './routes';
@@ -21,6 +20,8 @@ const checkAccessFn = <T,>(value: T, message?: string): void => {
   }
 };
 
+class GetAuthorizedMeError extends Error {}
+
 type Props = Record<string, any>;
 type QueryResult = UseTRPCQueryResult<any, any>;
 type QuerySuccessResult<TQueryResult extends QueryResult> = UseTRPCQuerySuccessResult<
@@ -35,6 +36,7 @@ type HelperProps<TQueryResult extends QueryResult | undefined> = {
 type SetPropsProps<TQueryResult extends QueryResult | undefined> = HelperProps<TQueryResult> & {
   checkExists: typeof checkExistsFn;
   checkAccess: typeof checkAccessFn;
+  getAuthorizedMe: (message?: string) => NonNullable<AppContext['me']>;
 };
 type PageWrapperProps<TProps extends Props, TQueryResult extends QueryResult | undefined> = {
   redirectAuthorized?: boolean;
@@ -92,11 +94,11 @@ const PageWrapper = <
   }
 
   if (queryResult?.isError) {
-    return <ErrorPageComponent message={queryResult.error.message} />;
+    return <NotFoundPage message={queryResult.error.message} />;
   }
 
   if (authorizedOnly && !ctx.me) {
-    return <ErrorPageComponent title={authorizedOnlyTitle} message={authorizedOnlyMessage} />;
+    return <NotFoundPage title={authorizedOnlyTitle} message={authorizedOnlyMessage} />;
   }
 
   const helperProps = { ctx, queryResult: queryResult as never };
@@ -104,22 +106,30 @@ const PageWrapper = <
   if (checkAccess) {
     const accessDenied = !checkAccess(helperProps);
     if (accessDenied) {
-      return <ErrorPageComponent title={checkAccessTitle} message={checkAccessMessage} />;
+      return <NotFoundPage title={checkAccessTitle} message={checkAccessMessage} />;
     }
   }
 
   if (checkExists) {
     const notExists = !checkExists(helperProps);
     if (notExists) {
-      return <ErrorPageComponent title={checkExistsTitle} message={checkExistsMessage} />;
+      return <NotFoundPage title={checkExistsTitle} message={checkExistsMessage} />;
     }
   }
+
+  const getAuthorizedMe = (message?: string) => {
+    if (!ctx.me) {
+      throw new GetAuthorizedMeError(message);
+    }
+    return ctx.me;
+  };
 
   try {
     const props = setProps?.({
       ...helperProps,
       checkExists: checkExistsFn,
       checkAccess: checkAccessFn,
+      getAuthorizedMe,
     }) as TProps;
     return <Page {...props} />;
   } catch (error) {
@@ -131,6 +141,14 @@ const PageWrapper = <
     if (error instanceof CheckAccessError) {
       return (
         <NotFoundPage title={checkAccessTitle} message={error.message || checkAccessMessage} />
+      );
+    }
+    if (error instanceof GetAuthorizedMeError) {
+      return (
+        <NotFoundPage
+          title={authorizedOnlyTitle}
+          message={error.message || authorizedOnlyMessage}
+        />
       );
     }
     throw error;
