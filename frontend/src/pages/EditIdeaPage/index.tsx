@@ -1,8 +1,8 @@
-import { zUpdateIdeaTrpcInput } from '@devpont/backend/src/router/updateIdea/input';
+import { zUpdateIdeaTrpcInput } from '@devpont/backend/src/router/ideas/updateIdea/input';
 import pick from 'lodash/pick';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Alert } from '../../components/Alert';
-import { Button } from '../../components/Button';
+import { Button } from '../../components/Buttons';
 import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';

@@ -5,7 +5,7 @@ import { withZodSchema } from 'formik-validator-zod';
 import { useMemo, useState } from 'react';
 import { z } from 'zod';
 import { type AlertProps } from '../components/Alert';
-import { type ButtonProps } from '../components/Button';
+import { type ButtonProps } from '../components/Buttons';
 
 export const useForm = <TZodSchema extends z.ZodTypeAny>({
   successMessage = false,

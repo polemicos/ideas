@@ -1,5 +1,5 @@
-import { trpc } from '../../lib/trpc';
-import { getPasswordHash } from '../../utils/getPasswordHash';
+import { trpc } from '../../../lib/trpc';
+import { getPasswordHash } from '../../../utils/getPasswordHash';
 import { zUpdatePasswordTrpcInput } from './input';
 
 export const updatePasswordTrpcRoute = trpc.procedure

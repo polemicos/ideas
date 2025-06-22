@@ -1,6 +1,6 @@
 import { format } from 'date-fns/format';
 import { useParams } from 'react-router-dom';
-import { LinkButton } from '../../components/Button';
+import { LikeButton, LinkButton } from '../../components/Buttons';
 import { Segment } from '../../components/Segment';
 import { withPageWrapper } from '../../lib/pageWrapper';
 import { getEditIdeaRoute, ViewIdeaRouteParams } from '../../lib/routes';
@@ -16,6 +16,7 @@ export const ViewIdeaPage = withPageWrapper({
     const idea = checkExists(queryResult.data.idea, 'Idea not found');
     return { idea, me: ctx.me };
   },
+  showLoaderOnFetching: false,
 })(({ idea, me }) => {
   return (
     <Segment title={idea.title} description={idea.description}>
@@ -24,6 +25,15 @@ export const ViewIdeaPage = withPageWrapper({
       <div className={css.author}>Author: {idea.user.name}</div>
       <div>
         <div className={css.text} dangerouslySetInnerHTML={{ __html: idea.text }} />
+      </div>
+      <div className={css.likes}>
+        Likes: {idea.likesCount}
+        {me && (
+          <>
+            <br />
+            <LikeButton idea={idea} />
+          </>
+        )}
       </div>
       {me?.id === idea.userId && (
         <div className={css.editButton}>

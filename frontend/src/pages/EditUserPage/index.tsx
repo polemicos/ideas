@@ -1,9 +1,9 @@
+import { zUpdatePasswordTrpcInput } from '@devpont/backend/src/router/auth/updatePassword/input';
+import { zUpdateUserTrpcInput } from '@devpont/backend/src/router/auth/updateUser/input';
 import { TrpcRouterOutput } from '@devpont/backend/src/router/router';
-import { zUpdatePasswordTrpcInput } from '@devpont/backend/src/router/updatePassword/input';
-import { zUpdateUserTrpcInput } from '@devpont/backend/src/router/updateUser/input';
 import { z } from 'zod';
 import { Alert } from '../../components/Alert';
-import { Button } from '../../components/Button';
+import { Button } from '../../components/Buttons';
 import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';

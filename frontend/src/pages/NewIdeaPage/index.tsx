@@ -1,7 +1,7 @@
-import { zCreateideaTrpcInput } from '@devpont/backend/src/router/createIdea/input';
+import { zCreateideaTrpcInput } from '@devpont/backend/src/router/ideas/createIdea/input';
 import { useNavigate } from 'react-router-dom';
 import { Alert } from '../../components/Alert';
-import { Button } from '../../components/Button';
+import { Button } from '../../components/Buttons';
 import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';

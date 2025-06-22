@@ -1,7 +1,7 @@
-import { zSignInTrpcInput } from '@devpont/backend/src/router/signIn/input';
+import { zSignInTrpcInput } from '@devpont/backend/src/router/auth/signIn/input';
 import Cookies from 'js-cookie';
 import { Alert } from '../../components/Alert';
-import { Button } from '../../components/Button';
+import { Button } from '../../components/Buttons';
 import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
@@ -23,7 +23,6 @@ export const SignInPage = withPageWrapper({
     onSubmit: async (values) => {
       const { token } = await signIn.mutateAsync(values);
       Cookies.set('token', token, { expires: 9999 });
-      console.info('Submitted', values);
       void trpcUtils.invalidate();
     },
     resetOnSuccess: false,

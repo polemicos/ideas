@@ -1,5 +1,5 @@
-import { toClientMe } from '../../lib/models';
-import { trpc } from '../../lib/trpc';
+import { toClientMe } from '../../../lib/models';
+import { trpc } from '../../../lib/trpc';
 import { zUpdateUserTrpcInput } from './input';
 
 export const updateUserTrpcRoute = trpc.procedure
