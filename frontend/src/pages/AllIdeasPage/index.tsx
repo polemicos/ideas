@@ -1,6 +1,7 @@
+import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
 import { Alert } from '../../components/Alert';
-import { Button } from '../../components/Button';
+import { layoutContentRef } from '../../components/Layout';
 import { Segment } from '../../components/Segment';
 import { getViewIdeaRoute } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
@@ -18,9 +19,7 @@ export const AllIdeasPages = () => {
     isFetchingNextPage,
     isRefetching,
   } = trpc.getIdeas.useInfiniteQuery(
-    {
-      limit: 3,
-    },
+    {},
     {
       getNextPageParam: (lastPage) => {
         return lastPage.nextCursor;
@@ -31,12 +30,23 @@ export const AllIdeasPages = () => {
   if (!data) return <div>No data</div>;
   return (
     <Segment title="All Ideas">
-      {isLoading || isFetching ? (
-        <p>Loading...</p>
-      ) : isError ? (
-        <Alert color="red">{error.message}</Alert>
-      ) : (
-        <div className={css.ideas}>
+      <div className={css.ideas}>
+        {isError && <Alert color="red">{error.message}</Alert>}
+        {(isLoading || isFetching || isRefetching) && <p>Loading...</p>}
+        <InfiniteScroll
+          threshold={230}
+          loadMore={() => {
+            if (!isFetchingNextPage && hasNextPage) void fetchNextPage();
+          }}
+          hasMore={hasNextPage}
+          loader={
+            <div className={css.more} key="loader">
+              <p>Loading...</p>
+            </div>
+          }
+          getScrollParent={() => layoutContentRef.current}
+          useWindow={false}
+        >
           {data.pages
             .flatMap((page) => page.ideas)
             .map((idea) => (
@@ -52,20 +62,8 @@ export const AllIdeasPages = () => {
                 />
               </div>
             ))}
-          <div className={css.more}>
-            {hasNextPage && !isFetchingNextPage && (
-              <Button
-                loading={isFetchingNextPage || isRefetching}
-                onClick={() => {
-                  void fetchNextPage();
-                }}
-              >
-                Load more
-              </Button>
-            )}
-          </div>
-        </div>
-      )}
+        </InfiniteScroll>
+      </div>
     </Segment>
   );
 };
