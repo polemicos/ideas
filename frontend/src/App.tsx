@@ -20,8 +20,8 @@ export const App = () => {
       <AppContextProvider>
         <BrowserRouter>
           <Routes>
-            <Route path={r.getSignOutRoute()} element={<SignOutPage />} />
             <Route element={<Layout />}>
+              <Route path={r.getSignOutRoute()} element={<SignOutPage />} />
               <Route path={r.getAllIdeasRoute()} element={<AllIdeasPages />} />
               <Route path={r.getNewIdeaRoute()} element={<NewIdeaPage />} />
               <Route path={r.getEditIdeaRoute(r.editIdeaRouteParams)} element={<EditIdeaPage />} />

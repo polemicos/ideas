@@ -1,6 +1,7 @@
 import { type UseTRPCQueryResult, type UseTRPCQuerySuccessResult } from '@trpc/react-query/shared';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from '../components/Loader';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { useAppContext, type AppContext } from './ctx';
 import { getAllIdeasRoute } from './routes';
@@ -90,7 +91,7 @@ const PageWrapper = <
   }, [redirectNeeded, navigate]);
 
   if (queryResult?.isLoading || queryResult?.isFetching || redirectNeeded) {
-    return <p>Loading...</p>;
+    return <Loader type="section" />;
   }
 
   if (queryResult?.isError) {

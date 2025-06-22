@@ -10,12 +10,12 @@ export type ButtonProps = {
 };
 export const Button = ({ children, loading, type = 'submit', onClick }: ButtonProps) => (
   <button
-    className={cn({ [css.button]: true, [css.disabled]: loading })}
+    className={cn({ [css.button]: true, [css.disabled]: loading, [css.loading]: loading })}
     type={type}
     disabled={loading}
     onClick={onClick}
   >
-    {loading ? 'Processing...' : children}
+    <span className={css.text}>{children}</span>
   </button>
 );
 
