@@ -1,14 +1,31 @@
+import { zGetIdeasTrpcInput } from '@devpont/backend/src/router/ideas/getIdeas/input';
+import { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
+import { useDebounceValue } from 'usehooks-ts';
 import { Alert } from '../../components/Alert';
+import { Input } from '../../components/Input';
 import { layoutContentRef } from '../../components/Layout';
 import { Loader } from '../../components/Loader';
 import { Segment } from '../../components/Segment';
+import { useForm } from '../../lib/form';
 import { getViewIdeaRoute } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 import css from './index.module.scss';
 
 export const AllIdeasPages = () => {
+  const { formik } = useForm({
+    initialValues: {
+      search: '',
+    },
+    validationSchema: zGetIdeasTrpcInput.pick({ search: true }),
+  });
+  const [search, setSearch] = useDebounceValue('', 500);
+
+  useEffect(() => {
+    setSearch(!formik.values.search ? '' : formik.values.search);
+  }, [formik.values.search]);
+
   const {
     data,
     error,
@@ -20,7 +37,7 @@ export const AllIdeasPages = () => {
     isFetchingNextPage,
     isRefetching,
   } = trpc.getIdeas.useInfiniteQuery(
-    {},
+    { search },
     {
       getNextPageParam: (lastPage) => {
         return lastPage.nextCursor;
@@ -31,9 +48,13 @@ export const AllIdeasPages = () => {
   if (!data) return <div>No data</div>;
   return (
     <Segment title="All Ideas">
+      {(isLoading || isFetching || isRefetching) && <Loader type="section" />}
+      {isError && <Alert color="red">{error.message}</Alert>}
+      {!data.pages[0].ideas.length && <Alert color="blue">No ideas found</Alert>}
+      <div className={css.filter}>
+        <Input maxWidth={'100%'} label="Search" formik={formik} name="search" />
+      </div>
       <div className={css.ideas}>
-        {isError && <Alert color="red">{error.message}</Alert>}
-        {(isLoading || isFetching || isRefetching) && <Loader type="section" />}
         <InfiniteScroll
           threshold={230}
           loadMore={() => {

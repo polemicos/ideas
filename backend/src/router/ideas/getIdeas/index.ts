@@ -5,6 +5,7 @@ import { zGetIdeasTrpcInput } from './input';
 export const getIdeasTrpcRoute = trpc.procedure
   .input(zGetIdeasTrpcInput)
   .query(async ({ ctx, input }) => {
+    const normalizedSearch = input.search?.trim().replace(/[\s\n\t]/g, '&');
     const rawIdeas = await ctx.prisma.idea.findMany({
       select: {
         id: true,
@@ -17,6 +18,27 @@ export const getIdeasTrpcRoute = trpc.procedure
           },
         },
       },
+      where: !input.search
+        ? undefined
+        : {
+            OR: [
+              {
+                title: {
+                  search: normalizedSearch,
+                },
+              },
+              {
+                description: {
+                  search: normalizedSearch,
+                },
+              },
+              {
+                text: {
+                  search: normalizedSearch,
+                },
+              },
+            ],
+          },
       orderBy: [
         {
           createdAt: 'desc',
