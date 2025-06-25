@@ -14,7 +14,6 @@ export const createIdeaTrpcRoute = trpc.procedure
 
     await ctx.prisma.idea.create({
       data: {
-        // Change this when authorization will be implemented
         userId: ctx.me.id,
         title: input.title,
         description: input.description,

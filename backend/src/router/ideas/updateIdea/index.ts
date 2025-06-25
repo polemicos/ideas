@@ -1,4 +1,5 @@
 import { trpc } from '../../../lib/trpc';
+import { canEditIdea } from '../../../utils/can';
 import { zUpdateIdeaTrpcInput } from './input';
 
 export const updateIdeaTrpcRoute = trpc.procedure
@@ -11,7 +12,7 @@ export const updateIdeaTrpcRoute = trpc.procedure
       },
     });
     if (!idea) throw new Error('Idea not found');
-    if (ctx.me.id !== idea.userId) throw new Error('Not your idea');
+    if (canEditIdea(ctx.me, idea)) throw new Error('Not your idea');
     if (idea.title !== input.title) {
       const exIdea = await ctx.prisma.idea.findUnique({
         where: {

@@ -36,6 +36,7 @@ export const getIdeaTrpcRoute = trpc.procedure
       },
     });
 
+    if (rawIdea?.blockedAt) throw new Error('Blocked by admin');
     const isLikedByMe = !!rawIdea?.IdeasToLikes.length;
     const likesCount = rawIdea?._count.IdeasToLikes || 0;
     const idea = rawIdea && {

@@ -4,15 +4,29 @@ import { Link } from 'react-router-dom';
 import { trpc } from '../../lib/trpc';
 import css from './index.module.scss';
 
+type ButtonColor = 'red' | 'blue' | 'green';
+
 export type ButtonProps = {
   children: React.ReactNode;
   loading?: boolean;
   type?: 'submit' | 'button';
+  color?: ButtonColor;
   onClick?: () => void;
 };
-export const Button = ({ children, loading, type = 'submit', onClick }: ButtonProps) => (
+export const Button = ({
+  children,
+  loading,
+  type = 'submit',
+  onClick,
+  color = 'green',
+}: ButtonProps) => (
   <button
-    className={cn({ [css.button]: true, [css.disabled]: loading, [css.loading]: loading })}
+    className={cn({
+      [css.button]: true,
+      [css.disabled]: loading,
+      [css.loading]: loading,
+      [css[`color-${color}`]]: true,
+    })}
     type={type}
     disabled={loading}
     onClick={onClick}
@@ -21,8 +35,8 @@ export const Button = ({ children, loading, type = 'submit', onClick }: ButtonPr
   </button>
 );
 
-export const LinkButton = ({ children, to }: ButtonProps & { to: string }) => (
-  <Link className={css.button} to={to}>
+export const LinkButton = ({ children, to, color = 'green' }: ButtonProps & { to: string }) => (
+  <Link className={cn({ [css.button]: true, [css[`color-${color}`]]: true })} to={to}>
     {children}
   </Link>
 );

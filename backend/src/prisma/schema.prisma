@@ -19,6 +19,7 @@ model Idea {
   serial       Int            @unique @default(autoincrement())
   userId       String
   IdeasToLikes IdeasToLikes[]
+  blockedAt    DateTime?
 }
 
 model User {
@@ -30,6 +31,12 @@ model User {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   IdeasToLikes IdeasToLikes[]
+  permissions  Permissions[]
+}
+
+enum Permissions {
+  BLOCK_IDEAS
+  ALL
 }
 
 model IdeasToLikes {

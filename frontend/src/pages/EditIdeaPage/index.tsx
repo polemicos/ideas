@@ -1,4 +1,5 @@
 import { zUpdateIdeaTrpcInput } from '@devpont/backend/src/router/ideas/updateIdea/input';
+import { canEditIdea } from '@devpont/backend/src/utils/can';
 import pick from 'lodash/pick';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Alert } from '../../components/Alert';
@@ -20,7 +21,8 @@ export const EditIdeaPage = withPageWrapper({
   },
   setProps: ({ queryResult, ctx, checkAccess, checkExists }) => {
     const idea = checkExists(queryResult.data.idea, 'Idea not found');
-    checkAccess(ctx.me?.id === idea.userId, 'You are not the author of this idea');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    checkAccess(canEditIdea(ctx.me, idea), 'You are not the author of this idea');
     return { idea };
   },
 })(({ idea }) => {

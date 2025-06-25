@@ -23,9 +23,17 @@
 }
 
 .likes {
+  @include mixins.h2;
   margin-top: 20px;
+  flex-direction: row;
+  flex: 1;
+  font-size: 14px;
 }
 
 .editButton {
   margin-top: 20px;
+}
+
+.blockIdea {
+  margin-top: 10px;
 }

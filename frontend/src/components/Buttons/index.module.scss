@@ -5,7 +5,6 @@
   width: fit-content;
   padding: 10px 15px;
   color: $white;
-  background-color: $green;
   border: none;
   font-weight: bold;
   border-radius: $borderRadiusSmall;
@@ -13,12 +12,28 @@
   user-select: none;
   position: relative;
 
-  &:hover {
-    background-color: $lightGreen;
+  &.color-green {
+    background-color: $green;
+
+    &:hover {
+      background-color: $lightGreen;
+    }
+
+    &:active {
+      background-color: #39d039;
+    }
   }
 
-  &:active {
-    background-color: #39d039;
+  &.color-red {
+    background-color: $red;
+
+    &:hover {
+      background-color: $lightRed;
+    }
+
+    &:active {
+      background-color: #d03939;
+    }
   }
 
   &.disabled {
