@@ -22,9 +22,9 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
       {isLoading || isFetching ? (
         <Loader type="page" />
       ) : isError ? (
-        <p>{error.message}</p>
+        <>{error.message}</>
       ) : (
-        <p>{children}</p>
+        <>{children}</>
       )}
     </AppContext.Provider>
   );

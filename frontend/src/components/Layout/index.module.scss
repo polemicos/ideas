@@ -19,6 +19,11 @@ $breakpoint: '<=900px';
     padding: 20px 30px;
     border-right: 1px solid $black;
     @include mixins.media($breakpoint) {
+      position: fixed;
+      width: 100%;
+      z-index: 10;
+      background: transparent;
+      backdrop-filter: blur(13px);
       flex: 0 0 auto;
       overflow: visible;
       border-right: none;
@@ -51,6 +56,15 @@ $breakpoint: '<=900px';
     padding: 20px 30px;
     @include mixins.media($breakpoint) {
       overflow-y: auto;
+      z-index: 0;
     }
+  }
+}
+
+.navSpacer {
+  display: none;
+  @include mixins.media($breakpoint) {
+    display: block;
+    height: auto;
   }
 }
